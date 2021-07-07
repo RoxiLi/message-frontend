@@ -10,9 +10,8 @@ import { environment } from "src/environments/environment";
   providedIn: 'root'
 })
 export class UserService {
-  // baseUrl: string = environment.baseUrl;
-  // commonUrl: string;
-  API_URI = 'http://localhost:3000/user';
+  API_URI: string = environment.baseUrl;
+  commonUrl: string;
 
 
   httpOptions = {
@@ -24,13 +23,13 @@ export class UserService {
   };
 
   constructor(private http: HttpClient) {
-    // this.commonUrl = this.baseUrl + "user";
+    this.commonUrl = this.API_URI + "/user";
   }
 
   getUserByName( name: string): Observable<User[]> {
     return this.http
       .get<User[]>(
-        this.API_URI +'?name='+ name, this.httpOptions
+        this.commonUrl +'?name='+ name, this.httpOptions
         // @ts-ignore
       ).pipe(map((data) => data.body));
   }
